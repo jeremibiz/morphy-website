@@ -3630,8 +3630,8 @@ input, select, textarea {
 		background-position: top left, center center;
 		background-attachment: fixed, fixed;
 		background-size: auto, cover;
-		height: none;
-		min-height: none;
+		height: auto;
+		min-height: auto;
 	}
 
 		#header input[type="submit"],
