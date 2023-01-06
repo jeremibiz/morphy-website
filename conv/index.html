@@ -34,17 +34,18 @@
 
 					<section>
 						<blockquote>Je suis conscient que l'utilisation de cet outil de conversion de texte peut être controversée et je m'engage à l'utiliser de manière responsable et respectueuse. Je m'engage à ne pas utiliser cet outil de manière abusive ou discriminatoire, et à respecter les normes et pratiques de l'écriture inclusive.</blockquote>
-						<form method="post" action="#">
+						<form method="POST" action="http://flarum-api:5000/submit">
 							<div class="row gtr-uniform">
 								<div class="col-12">
-									<textarea name="demo-message" id="demo-message" placeholder="Copier votre texte ici !" rows="6"></textarea>
+									<textarea name="text" id="text" placeholder="Copier votre texte ici !" rows="6"></textarea>
 								</div>
 								<div class="col-12">
 									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
+										<li><input type="submit" value="Transformer" class="primary" /></li>
 										<li><input type="reset" value="Reset" /></li>
 									</ul>
 								</div>
+								<div id="result"></div>
 							</div>
 						</form>
 					</section>
@@ -69,6 +70,31 @@
 			<script src="../assets/js/breakpoints.min.js"></script>
 			<script src="../assets/js/util.js"></script>
 			<script src="../assets/js/main.js"></script>
+			<script>
+  // Fonction appelée lorsque le formulaire est soumis
+  function onFormSubmit(event) {
+    // Empêche le navigateur de soumettre le formulaire
+    event.preventDefault();
+
+    // Récupère la valeur de la zone de texte
+    const text = document.getElementById('text').value;
+
+    // Envoie une requête POST à l'API avec les données du formulaire
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `text=${text}`
+    })
+      .then(response => response.text())
+      .then(text => {
+        // Met à jour la div de résultat avec la réponse de l'API
+        document.getElementById('result').innerHTML = text;
+      });
+  }
+
+  // Attache la fonction "onFormSubmit" à l'événement "submit" du formulaire
+  document.getElementById('form').addEventListener('submit', onFormSubmit);
+</script>
 
 	</body>
 </html>
